@@ -61,6 +61,18 @@ describe("UserController", () => {
     expect(response.body.data).toEqual(expectedUsers);
   });
 
+  it("Deve retornar uma lista de usuários vazia", async () => {
+    const mockUsers: IUser[] = [];
+    const expectedUsers: IUserResponse[] = [];
+
+    jest.spyOn(UserRepository.prototype, "list").mockReturnValueOnce(mockUsers);
+
+    const response = await request(app).get("/users");
+    expect(response.status).toBe(200);
+    expect(response.body.success).toBe(true);
+    expect(response.body.data).toEqual(expectedUsers);
+  });
+
   it("Deve retornar um usuário corretamente", async () => {
     const mockUser: IUser = {
       id: 2,
